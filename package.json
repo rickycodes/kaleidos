@@ -1,0 +1,20 @@
+{
+  "name": "kaleidos",
+  "version": "0.0.1",
+  "description": "canvas kaleidoscope",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard -v",
+    "build:example": "webpack example/index.js example/bundle.js --display-modules -v",
+    "watch:example": "webpack example/index.js example/bundle.js --display-modules -v -w"
+  },
+  "keywords": [
+    "canvas",
+    "kaleidoscope"
+  ],
+  "author": "rickycodes",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^6.0.5"
+  }
+}
