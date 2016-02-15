@@ -6,7 +6,8 @@
   "scripts": {
     "test": "standard -v",
     "build:example": "webpack example/index.js example/bundle.js --display-modules -v",
-    "watch:example": "webpack example/index.js example/bundle.js --display-modules -v -w"
+    "watch:example": "webpack example/index.js example/bundle.js --display-modules -v -w",
+    "server:example": "http-server example"
   },
   "keywords": [
     "canvas",
@@ -15,6 +16,7 @@
   "author": "rickycodes",
   "license": "MIT",
   "devDependencies": {
+    "http-server": "^0.8.5",
     "standard": "^6.0.5"
   }
 }

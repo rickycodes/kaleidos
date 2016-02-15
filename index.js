@@ -24,12 +24,10 @@ module.exports = function (options) {
 
   k.draw = function () {
     k.domElement.width = k.domElement.height = options.radius * 2
-    console.log(options.radius)
     k.context.fillStyle = k.context.createPattern(k.image, 'repeat')
     var step = two_pi / options.slices
     var cx = k.image.width / 2
-    console.log(cx)
-    var scale = k.zoom * (options.radius / Math.min(k.image.width, k.image.height))
+    var scale = options.zoom * (options.radius / Math.min(k.image.width, k.image.height))
     for (var i = 0; i < options.slices; i++) {
       k.context.save()
       k.context.translate(options.radius, options.radius)
@@ -52,7 +50,6 @@ module.exports = function (options) {
   }
 
   k.image.onload = function() {
-    console.log('image loaded!')
     k.draw()
   }
 
