@@ -7,20 +7,7 @@ module.exports = function (opts) {
   var ty = opts.offsetY
   var tr = opts.offsetRotation
 
-  if (opts.slices % 2) opts.slices += 1 // force slices to be even
-
-  k.domElement = document.createElement('canvas')
-  k.context = k.domElement.getContext('2d')
-  k.image = new Image()
-  k.image.src = opts.src
-
-  k.offsetX = opts.offsetX
-  k.offsetY = opts.offsetY
-  k.offsetRotation = opts.offsetRotation
-
   k.draw = function () {
-    k.domElement.width = k.domElement.height = opts.radius * 2
-    k.context.fillStyle = k.context.createPattern(k.image, 'repeat')
     var step = two_pi / opts.slices
     var cx = k.image.width / 2
     var scale = opts.zoom * (opts.radius / Math.min(k.image.width, k.image.height))
@@ -44,27 +31,45 @@ module.exports = function (opts) {
     }
   }
 
-  k.image.onload = function () {
-    k.draw()
+  function setup () {
+    if (opts.slices % 2) {
+      opts.slices += 1 // force slices to be even
+    }
+
+    k.domElement = document.createElement('canvas')
+    k.context = k.domElement.getContext('2d')
+    k.image = new Image()
+    k.image.src = opts.src
+
+    k.offsetX = opts.offsetX
+    k.offsetY = opts.offsetY
+    k.offsetRotation = opts.offsetRotation
   }
 
-  k.domElement.style.position = 'absolute'
-  k.domElement.style.marginLeft = -opts.radius + 'px'
-  k.domElement.style.marginTop = -opts.radius + 'px'
-  k.domElement.style.left = '50%'
-  k.domElement.style.top = '50%'
-  k.domElement.setAttribute('class', 'kaleidoscope')
+  function init () {
+    k.domElement.style.position = 'absolute'
+    k.domElement.style.marginLeft = -opts.radius + 'px'
+    k.domElement.style.marginTop = -opts.radius + 'px'
+    k.domElement.style.left = '50%'
+    k.domElement.style.top = '50%'
+    k.domElement.setAttribute('class', 'kaleidoscope')
+    k.domElement.width = k.domElement.height = opts.radius * 2
+    k.context.fillStyle = k.context.createPattern(k.image, 'repeat')
 
-  document.body.appendChild(k.domElement)
+    document.body.appendChild(k.domElement)
+
+    k.draw()
+
+    if (opts.animate) {
+      render()
+    }
+  }
 
   function render () {
     var delta, theta
-    if (!opts.interactive) {
-      var time = new Date().getTime() * 0.0002
-      tx = Math.sin(time) * 1920 + 2560
-      ty = Math.cos(time * 0.9) * 1920 + 2560
-    }
-
+    var time = new Date().getTime() * 0.0002
+    tx = Math.sin(time) * 1920 + 2560
+    ty = Math.cos(time * 0.9) * 1920 + 2560
     delta = tr - k.offsetRotation
     theta = Math.atan2(Math.sin(delta), Math.cos(delta))
     k.offsetX += (tx - k.offsetX) * opts.ease
@@ -74,7 +79,8 @@ module.exports = function (opts) {
     requestAnimationFrame(render)
   }
 
-  render()
+  setup()
+  k.image.addEventListener('load', init)
 
   return k
 }

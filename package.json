@@ -7,13 +7,13 @@
     "test": "standard -v",
     "build:example": "webpack example/index.js example/bundle.js --display-modules -v",
     "watch:example": "webpack example/index.js example/bundle.js --display-modules -v -w",
-    "server:example": "http-server example"
+    "server:example": "http-server example -p 4000"
   },
   "keywords": [
     "canvas",
     "kaleidoscope"
   ],
-  "author": "rickycodes",
+  "author": "@rickycodes",
   "license": "MIT",
   "devDependencies": {
     "http-server": "^0.8.5",
