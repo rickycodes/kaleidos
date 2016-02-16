@@ -1,100 +1,101 @@
 /*global Image requestAnimationFrame*/
-module.exports = function (opts) {
-  var k = {}
+module.exports = function (conf) {
   var half_pi = Math.PI / 2
   var two_pi = Math.PI * 2
-  var tx = opts.offsetX
-  var ty = opts.offsetY
-  var tr = opts.offsetRotation
+  var tx = conf.offsetX
+  var ty = conf.offsetY
+  var tr = conf.offsetRotation
 
-  k.draw = function () {
-    var step = two_pi / opts.slices
-    var cx = k.image.width / 2
-    var scale = opts.zoom * (opts.radius / Math.min(k.image.width, k.image.height))
-    for (var i = 0; i < opts.slices; i++) {
-      k.context.save()
-      k.context.translate(k.radius, k.radius)
-      k.context.rotate(i * step)
-      k.context.beginPath()
-      k.context.moveTo(-0.5, -0.5)
-      k.context.arc(0, 0, k.radius, step * -0.51, step * 0.51)
-      k.context.lineTo(0.5, 0.5)
-      k.context.closePath()
-      k.context.rotate(half_pi)
-      k.context.scale(scale, scale)
-      k.context.scale([-1, 1][i % 2], 1)
-      k.context.translate(k.offsetX - cx, k.offsetY)
-      k.context.rotate(k.offsetRotation)
-      k.context.scale(k.offsetScale, k.offsetScale)
-      k.context.fill()
-      k.context.restore()
-    }
-  }
-
-  function setup () {
-    if (opts.slices % 2) {
-      opts.slices += 1 // force slices to be even
+  function Kaleidos (conf) {
+    var _self = this
+    if (conf.slices % 2) {
+      conf.slices += 1 // force slices to be even
     }
 
-    k.domElement = document.createElement('canvas')
-    k.context = k.domElement.getContext('2d')
-    k.image = new Image()
-    k.image.src = opts.src
+    this.domElement = document.createElement('canvas')
+    this.context = this.domElement.getContext('2d')
+    this.image = new Image()
+    this.image.src = conf.src
+    this.offsetX = conf.offsetX
+    this.offsetY = conf.offsetY
+    this.offsetRotation = conf.offsetRotation
+    this.radius = conf.radius
 
-    k.offsetX = opts.offsetX
-    k.offsetY = opts.offsetY
-    k.offsetRotation = opts.offsetRotation
-    k.radius = opts.radius
-  }
-
-  function init () {
-    k.domElement.style.position = 'absolute'
-    k.domElement.style.marginLeft = -opts.radius + 'px'
-    k.domElement.style.marginTop = -opts.radius + 'px'
-    k.domElement.style.left = '50%'
-    k.domElement.style.top = '50%'
-    k.domElement.setAttribute('class', 'kaleidoscope')
-    k.domElement.width = k.domElement.height = opts.radius * 2
-    k.context.fillStyle = k.context.createPattern(k.image, 'repeat')
-
-    document.body.appendChild(k.domElement)
-
-    if (opts.interactive) {
-      window.addEventListener('mousemove', onMouseMoved, false)
+    this.init = function () {
+      this.domElement.style.position = 'absolute'
+      this.domElement.style.marginLeft = -conf.radius + 'px'
+      this.domElement.style.marginTop = -conf.radius + 'px'
+      this.domElement.style.left = '50%'
+      this.domElement.style.top = '50%'
+      this.domElement.setAttribute('class', 'kaleidoscope')
+      this.domElement.width = this.domElement.height = conf.radius * 2
+      this.context.fillStyle = this.context.createPattern(this.image, 'repeat')
+      this.draw()
     }
 
-    render()
-    k.draw()
+    this.draw = function () {
+      var step = two_pi / conf.slices
+      var cx = this.image.width / 2
+      var scale = conf.zoom * (conf.radius / Math.min(this.image.width, this.image.height))
+      for (var i = 0; i < conf.slices; i++) {
+        this.context.save()
+        this.context.translate(this.radius, this.radius)
+        this.context.rotate(i * step)
+        this.context.beginPath()
+        this.context.moveTo(-0.5, -0.5)
+        this.context.arc(0, 0, this.radius, step * -0.51, step * 0.51)
+        this.context.lineTo(0.5, 0.5)
+        this.context.closePath()
+        this.context.rotate(half_pi)
+        this.context.scale(scale, scale)
+        this.context.scale([-1, 1][i % 2], 1)
+        this.context.translate(this.offsetX - cx, this.offsetY)
+        this.context.rotate(this.offsetRotation)
+        this.context.scale(this.offsetScale, this.offsetScale)
+        this.context.fill()
+        this.context.restore()
+      }
+    }
+
+    this.image.addEventListener('load', function () {
+      _self.init()
+      render()
+    })
+
+    return this
   }
 
-  function onMouseMoved (event) {
+  function onmousemoved (event) {
     var dx = event.pageX / window.innerWidth
     var dy = event.pageY / window.innerHeight
     var hx = dx - 0.5
     var hy = dy - 0.5
-    tx = hx * k.radius * -2
-    ty = hy * k.radius * 2
+    tx = hx * kaleidos.radius * -2
+    ty = hy * kaleidos.radius * 2
     tr = Math.atan2(hy, hx)
     return
   }
 
   function render () {
-    if (opts.animate) {
+    if (conf.animate) {
       var time = new Date().getTime() * 0.0002
       tx = Math.sin(time) * 1920 + 2560
       ty = Math.cos(time * 0.9) * 1920 + 2560
     }
-    var delta = tr - k.offsetRotation
+    var delta = tr - kaleidos.offsetRotation
     var theta = Math.atan2(Math.sin(delta), Math.cos(delta))
-    k.offsetX += (tx - k.offsetX) * opts.ease
-    k.offsetY += (ty - k.offsetY) * opts.ease
-    k.offsetRotation += (theta - k.offsetRotation) * opts.ease
-    k.draw()
+    kaleidos.offsetX += (tx - kaleidos.offsetX) * conf.ease
+    kaleidos.offsetY += (ty - kaleidos.offsetY) * conf.ease
+    kaleidos.offsetRotation += (theta - kaleidos.offsetRotation) * conf.ease
+    kaleidos.draw()
     requestAnimationFrame(render)
   }
 
-  setup()
-  k.image.addEventListener('load', init)
+  var kaleidos = new Kaleidos(conf)
 
-  return k
+  if (conf.interactive) {
+    window.addEventListener('mousemove', onmousemoved, false)
+  }
+
+  return kaleidos
 }
