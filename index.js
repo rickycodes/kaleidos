@@ -13,11 +13,11 @@ module.exports = function (opts) {
     var scale = opts.zoom * (opts.radius / Math.min(k.image.width, k.image.height))
     for (var i = 0; i < opts.slices; i++) {
       k.context.save()
-      k.context.translate(opts.radius, opts.radius)
+      k.context.translate(k.radius, k.radius)
       k.context.rotate(i * step)
       k.context.beginPath()
       k.context.moveTo(-0.5, -0.5)
-      k.context.arc(0, 0, opts.radius, step * -0.51, step * 0.51)
+      k.context.arc(0, 0, k.radius, step * -0.51, step * 0.51)
       k.context.lineTo(0.5, 0.5)
       k.context.closePath()
       k.context.rotate(half_pi)
@@ -44,6 +44,7 @@ module.exports = function (opts) {
     k.offsetX = opts.offsetX
     k.offsetY = opts.offsetY
     k.offsetRotation = opts.offsetRotation
+    k.radius = opts.radius
   }
 
   function init () {
@@ -58,20 +59,33 @@ module.exports = function (opts) {
 
     document.body.appendChild(k.domElement)
 
-    k.draw()
-
-    if (opts.animate) {
-      render()
+    if (opts.interactive) {
+      window.addEventListener('mousemove', onMouseMoved, false)
     }
+
+    render()
+    k.draw()
+  }
+
+  function onMouseMoved (event) {
+    var dx = event.pageX / window.innerWidth
+    var dy = event.pageY / window.innerHeight
+    var hx = dx - 0.5
+    var hy = dy - 0.5
+    tx = hx * k.radius * -2
+    ty = hy * k.radius * 2
+    tr = Math.atan2(hy, hx)
+    return
   }
 
   function render () {
-    var delta, theta
-    var time = new Date().getTime() * 0.0002
-    tx = Math.sin(time) * 1920 + 2560
-    ty = Math.cos(time * 0.9) * 1920 + 2560
-    delta = tr - k.offsetRotation
-    theta = Math.atan2(Math.sin(delta), Math.cos(delta))
+    if (opts.animate) {
+      var time = new Date().getTime() * 0.0002
+      tx = Math.sin(time) * 1920 + 2560
+      ty = Math.cos(time * 0.9) * 1920 + 2560
+    }
+    var delta = tr - k.offsetRotation
+    var theta = Math.atan2(Math.sin(delta), Math.cos(delta))
     k.offsetX += (tx - k.offsetX) * opts.ease
     k.offsetY += (ty - k.offsetY) * opts.ease
     k.offsetRotation += (theta - k.offsetRotation) * opts.ease
