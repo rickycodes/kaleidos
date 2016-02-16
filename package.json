@@ -14,7 +14,7 @@
     "kaleidoscope"
   ],
   "author": "@rickycodes",
-  "license": "MIT",
+  "license": "BSD",
   "devDependencies": {
     "http-server": "^0.8.5",
     "standard": "^6.0.5"
