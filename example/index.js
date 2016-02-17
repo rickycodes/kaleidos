@@ -1,4 +1,5 @@
 var conf = {
+  className: 'kaleidos',
   src: 'http://i.imgur.com/YaZJZac.jpg',
   animate: true,
   offsetRotation: 0,
