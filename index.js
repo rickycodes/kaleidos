@@ -1,9 +1,5 @@
-/*global Image requestAnimationFrame*/
+/*global Image*/
 module.exports = function (conf) {
-  var tx = conf.offsetX
-  var ty = conf.offsetY
-  var tr = conf.offsetRotation
-
   const Kaleidos = function (conf) {
     if (conf.slices % 2) { // force slices to be even
       conf.slices += 1
@@ -26,14 +22,13 @@ module.exports = function (conf) {
       this.domElement.width = this.domElement.height = conf.radius * 2
       this.context.fillStyle = this.context.createPattern(this.image, 'repeat')
       this.draw()
-      render()
     }
 
     this.draw = function () {
       var step = (Math.PI * 2) / conf.slices
       var cx = this.image.width / 2
       var scale = conf.zoom * (conf.radius / Math.min(this.image.width, this.image.height))
-      for (let i = 0; i < conf.slices; i++) {
+      for (var i = 0; i < conf.slices; i++) {
         this.context.save()
         this.context.translate(this.radius, this.radius)
         this.context.rotate(i * step)
@@ -54,36 +49,6 @@ module.exports = function (conf) {
     }
 
     return this
-  }
-
-  const onmousemoved = function (event) {
-    var dx = event.pageX / window.innerWidth
-    var dy = event.pageY / window.innerHeight
-    var hx = dx - 0.5
-    var hy = dy - 0.5
-    tx = hx * kaleidos.radius * -2
-    ty = hy * kaleidos.radius * 2
-    tr = Math.atan2(hy, hx)
-    return
-  }
-
-  const render = function () {
-    if (conf.animate) {
-      var time = new Date().getTime() * 0.0002
-      tx = Math.sin(time) * 2000 + 3000
-      ty = Math.cos(time * 0.9) * 2000 + 3000
-    }
-    var delta = tr - kaleidos.offsetRotation
-    var theta = Math.atan2(Math.sin(delta), Math.cos(delta))
-    kaleidos.offsetX += (tx - kaleidos.offsetX) * conf.ease
-    kaleidos.offsetY += (ty - kaleidos.offsetY) * conf.ease
-    kaleidos.offsetRotation += (theta - kaleidos.offsetRotation) * conf.ease
-    kaleidos.draw()
-    requestAnimationFrame(render)
-  }
-
-  if (conf.interactive) {
-    window.addEventListener('mousemove', onmousemoved, false)
   }
 
   const kaleidos = new Kaleidos(conf)
