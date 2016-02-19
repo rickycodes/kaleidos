@@ -1,5 +1,5 @@
 /*global Image*/
-const Kaleidos = module.exports = function (conf) {
+module.exports = function (conf) {
   const _self = this
   if (conf.slices % 2) { // force slices to be even
     conf.slices += 1

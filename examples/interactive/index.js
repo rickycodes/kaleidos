@@ -1,4 +1,5 @@
-const Kaleidos = require('../')
+/*global requestAnimationFrame*/
+const Kaleidos = require('../../')
 const conf = {
   className: 'kaleidos',
   src: 'http://i.imgur.com/YaZJZac.jpg',
@@ -16,12 +17,19 @@ var tx = conf.offsetX
 var ty = conf.offsetY
 var tr = conf.offsetRotation
 
+function onmousemoved (event) {
+  var dx = event.pageX / window.innerWidth
+  var dy = event.pageY / window.innerHeight
+  var hx = dx - 0.5
+  var hy = dy - 0.5
+  tx = hx * kaleidos.radius * -2
+  ty = hy * kaleidos.radius * 2
+  return
+}
+
 const render = function () {
-  var time = new Date().getTime() * 0.0002
   var delta = tr - kaleidos.offsetRotation
   var theta = Math.atan2(Math.sin(delta), Math.cos(delta))
-  tx = Math.sin(time) * 2000 + 3000
-  ty = Math.cos(time * 0.9) * 2000 + 3000
   kaleidos.offsetX += (tx - kaleidos.offsetX) * conf.ease
   kaleidos.offsetY += (ty - kaleidos.offsetY) * conf.ease
   kaleidos.offsetRotation += (theta - kaleidos.offsetRotation) * conf.ease
@@ -29,6 +37,7 @@ const render = function () {
   requestAnimationFrame(render)
 }
 
+window.addEventListener('mousemove', onmousemoved)
 document.body.appendChild(kaleidos.domElement)
 render()
 console.log(kaleidos)
