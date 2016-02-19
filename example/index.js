@@ -1,4 +1,5 @@
-var conf = {
+const Kaleidos = require('../')
+const conf = {
   className: 'kaleidos',
   src: 'http://i.imgur.com/YaZJZac.jpg',
   offsetRotation: 0,
@@ -10,10 +11,10 @@ var conf = {
   zoom: 0.4,
   ease: 0.1
 }
+const kaleidos = new Kaleidos(conf)
 var tx = conf.offsetX
 var ty = conf.offsetY
 var tr = conf.offsetRotation
-var kaleidos = require('../')(conf)
 
 const render = function () {
   var time = new Date().getTime() * 0.0002
