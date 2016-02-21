@@ -1,5 +1,7 @@
 /*global Image*/
 module.exports = function (conf) {
+  var cx = 2000
+  var scale = 0.6
   const _self = this
   if (conf.slices % 2) { // force slices to be even
     conf.slices += 1
@@ -8,8 +10,6 @@ module.exports = function (conf) {
   this.className = conf.className
   this.domElement = document.createElement('canvas')
   this.context = this.domElement.getContext('2d')
-  this.image = new Image()
-  this.image.src = conf.src
   this.offsetX = conf.offsetX
   this.offsetY = conf.offsetY
   this.offsetRotation = conf.offsetRotation
@@ -20,14 +20,18 @@ module.exports = function (conf) {
     this.domElement.style.marginTop = -conf.radius + 'px'
     this.domElement.setAttribute('class', this.className)
     this.domElement.width = this.domElement.height = conf.radius * 2
-    this.context.fillStyle = this.context.createPattern(this.image, 'repeat')
+    if (conf.src) {
+      this.context.fillStyle = this.context.createPattern(this.image, 'repeat')
+    }
     this.draw()
   }
 
   this.draw = function () {
     var step = (Math.PI * 2) / conf.slices
-    var cx = this.image.width / 2
-    var scale = conf.zoom * (conf.radius / Math.min(this.image.width, this.image.height))
+    if (conf.src) {
+      cx = this.image.width / 2
+      scale = conf.zoom * (conf.radius / Math.min(this.image.width, this.image.height))
+    }
     for (var i = 0; i < conf.slices; i++) {
       this.context.save()
       this.context.translate(this.radius, this.radius)
@@ -48,9 +52,13 @@ module.exports = function (conf) {
     }
   }
 
-  this.image.addEventListener('load', function () {
-    _self.init()
-  })
+  if (conf.src) {
+    this.image = new Image()
+    this.image.src = conf.src
+    this.image.addEventListener('load', function () {
+      _self.init()
+    })
+  }
 
   return this
 }

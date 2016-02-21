@@ -8,7 +8,7 @@
     "build": "webpack",
     "start": "npm run build && npm run server",
     "watch": "webpack -w & npm run server",
-    "server": "http-server examples -p 4000"
+    "server": "http-server dist -a localhost -p 8000"
   },
   "keywords": [
     "canvas",

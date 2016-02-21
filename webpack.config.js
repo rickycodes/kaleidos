@@ -4,10 +4,11 @@ module.exports = {
   entry: {
     basic: './examples/basic/index.js',
     animated: './examples/animated/index.js',
-    interactive: './examples/interactive/index.js'
+    interactive: './examples/interactive/index.js',
+    webcam: './examples/webcam/index.js'
   },
   output: {
-    path: 'examples/build/',
+    path: 'dist/js/',
     filename: '[name].min.js'
   },
   plugins: [
