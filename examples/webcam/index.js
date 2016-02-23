@@ -33,9 +33,9 @@ const render = function () {
   kaleidos.offsetX += (tx - kaleidos.offsetX) * conf.ease
   kaleidos.offsetY += (ty - kaleidos.offsetY) * conf.ease
   kaleidos.offsetRotation += (theta - kaleidos.offsetRotation) * conf.ease
+  requestAnimationFrame(render)
   kaleidos.context.fillStyle = kaleidos.context.createPattern(video, 'repeat')
   kaleidos.draw()
-  requestAnimationFrame(render)
 }
 
 function init () {
@@ -54,7 +54,11 @@ function init () {
 
       conf.src = video
       kaleidos = new Kaleidos(conf)
-      kaleidos.init()
+      try {
+        kaleidos.init()
+      } catch (error) {
+        console.log(error)
+      }
 
       window.addEventListener('mousemove', onmousemoved)
       document.body.appendChild(kaleidos.domElement)
