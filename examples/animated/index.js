@@ -1,8 +1,10 @@
-/*global requestAnimationFrame*/
+/*global Image requestAnimationFrame*/
 const Kaleidos = require('../../')
+const image = new Image()
+image.src = 'http://i.imgur.com/YaZJZac.jpg'
 const conf = {
   className: 'kaleidos',
-  src: 'http://i.imgur.com/YaZJZac.jpg',
+  src: image,
   offsetRotation: 0,
   offsetScale: 1,
   offsetX: 0,

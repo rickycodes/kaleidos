@@ -1,7 +1,4 @@
-/*global Image*/
 module.exports = function (conf) {
-  var cx = 2000
-  var scale = 0.6
   const _self = this
   if (conf.slices % 2) { // force slices to be even
     conf.slices += 1
@@ -20,18 +17,16 @@ module.exports = function (conf) {
     this.domElement.style.marginTop = -conf.radius + 'px'
     this.domElement.setAttribute('class', this.className)
     this.domElement.width = this.domElement.height = conf.radius * 2
-    if (conf.src) {
-      this.context.fillStyle = this.context.createPattern(this.image, 'repeat')
-    }
+    this.context.fillStyle = this.context.createPattern(conf.src, 'repeat')
     this.draw()
   }
 
   this.draw = function () {
     var step = (Math.PI * 2) / conf.slices
-    if (conf.src) {
-      cx = this.image.width / 2
-      scale = conf.zoom * (conf.radius / Math.min(this.image.width, this.image.height))
-    }
+    var cx = conf.src.width / 2
+    var width = conf.src.width || conf.src.videoWidth
+    var height = conf.src.height || conf.src.videoHeight
+    var scale = conf.zoom * (conf.radius / Math.min(width, height))
     for (var i = 0; i < conf.slices; i++) {
       this.context.save()
       this.context.translate(this.radius, this.radius)
@@ -52,13 +47,9 @@ module.exports = function (conf) {
     }
   }
 
-  if (conf.src) {
-    this.image = new Image()
-    this.image.src = conf.src
-    this.image.addEventListener('load', function () {
-      _self.init()
-    })
-  }
+  conf.src.addEventListener('load', function () {
+    _self.init()
+  })
 
   return this
 }

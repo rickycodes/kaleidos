@@ -46,12 +46,13 @@ function init () {
     return
   } else {
     navigator.getUserMedia({
-      video: true
+      video: { width: 1280, height: 720 }
     }, function (stream) {
       video = document.createElement('video')
       video.autoplay = true
       video.src = (window.URL) ? window.URL.createObjectURL(stream) : stream
 
+      conf.src = video
       kaleidos = new Kaleidos(conf)
       kaleidos.init()
 
