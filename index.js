@@ -11,6 +11,7 @@ module.exports = function (conf) {
   this.offsetY = conf.offsetY
   this.offsetRotation = conf.offsetRotation
   this.radius = conf.radius
+  this.slices = conf.slices
 
   this.init = function () {
     this.domElement.style.marginLeft = -conf.radius + 'px'
@@ -22,12 +23,12 @@ module.exports = function (conf) {
   }
 
   this.draw = function () {
-    var step = (Math.PI * 2) / conf.slices
+    var step = (Math.PI * 2) / this.slices
     var cx = conf.src.width / 2
     var width = conf.src.width || conf.src.videoWidth
     var height = conf.src.height || conf.src.videoHeight
     var scale = conf.zoom * (conf.radius / Math.min(width, height))
-    for (var i = 0; i < conf.slices; i++) {
+    for (var i = 0; i < this.slices; i++) {
       this.context.save()
       this.context.translate(this.radius, this.radius)
       this.context.rotate(i * step)

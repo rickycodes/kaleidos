@@ -42,3 +42,8 @@ test('offsetY should update', function (t) {
   kaleidos.offsetY += value
   t.equal(kaleidos.offsetY, initial + value)
 })
+
+test('slices should be even', function (t) {
+  t.plan(1)
+  t.equal(kaleidos.slices % 2, 0)
+})
