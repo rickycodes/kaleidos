@@ -1,0 +1,23 @@
+<style>
+html, body {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.kaleidos {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+</style>
+<body></body>
+<script>
+(function(){
+  var hash = window.location.hash.replace('#','')
+  var script = document.createElement('script')
+  script.setAttribute('src', 'js/' + hash + '.min.js')
+  document.body.appendChild(script)
+})()
+</script>
