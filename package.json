@@ -1,7 +1,12 @@
 {
   "name": "kaleidos",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "canvas kaleidoscope",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rickycodes/kaleidos.git"
+  },
+  "homepage": "https://github.com/rickycodes/kaleidos",
   "main": "index.js",
   "scripts": {
     "test": "npm run test:standard & npm run test:module",
@@ -16,7 +21,11 @@
     "canvas",
     "kaleidoscope"
   ],
-  "author": "@rickycodes",
+  "author": {
+    "name": "@rickycodes",
+    "email": "ricky.miller@gmail.com",
+    "url": "http://ricky.codes"
+  },
   "license": "BSD",
   "devDependencies": {
     "browserify": "^13.0.0",
