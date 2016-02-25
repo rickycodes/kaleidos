@@ -30,7 +30,6 @@ const kaleidos = new Kaleidos({
   zoom: 0.4,
   ease: 0.1
 })
-kaleidos.draw()
 ```
 
 ##### Append to DOM:
