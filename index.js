@@ -1,33 +1,33 @@
-module.exports = function (conf) {
+module.exports = function (options) {
   const _self = this
-  if (conf.slices % 2) { // force slices to be even
-    conf.slices += 1
+  if (options.slices % 2) { // force slices to be even
+    options.slices += 1
   }
 
-  this.className = conf.className
+  this.className = options.className
   this.domElement = document.createElement('canvas')
   this.context = this.domElement.getContext('2d')
-  this.offsetX = conf.offsetX
-  this.offsetY = conf.offsetY
-  this.offsetRotation = conf.offsetRotation
-  this.radius = conf.radius
-  this.slices = conf.slices
+  this.offsetX = options.offsetX
+  this.offsetY = options.offsetY
+  this.offsetRotation = options.offsetRotation
+  this.radius = options.radius
+  this.slices = options.slices
 
   this.init = function () {
-    this.domElement.style.marginLeft = -conf.radius + 'px'
-    this.domElement.style.marginTop = -conf.radius + 'px'
+    this.domElement.style.marginLeft = -options.radius + 'px'
+    this.domElement.style.marginTop = -options.radius + 'px'
     this.domElement.setAttribute('class', this.className)
-    this.domElement.width = this.domElement.height = conf.radius * 2
-    this.context.fillStyle = this.context.createPattern(conf.src, 'repeat')
+    this.domElement.width = this.domElement.height = options.radius * 2
+    this.context.fillStyle = this.context.createPattern(options.src, 'repeat')
     this.draw()
   }
 
   this.draw = function () {
     var step = (Math.PI * 2) / this.slices
-    var cx = conf.src.width / 2
-    var width = conf.src.width || conf.src.videoWidth
-    var height = conf.src.height || conf.src.videoHeight
-    var scale = conf.zoom * (conf.radius / Math.min(width, height))
+    var cx = options.src.width / 2
+    var width = options.src.width || options.src.videoWidth
+    var height = options.src.height || options.src.videoHeight
+    var scale = options.zoom * (options.radius / Math.min(width, height))
     for (var i = 0; i < this.slices; i++) {
       this.context.save()
       this.context.translate(this.radius, this.radius)
@@ -48,7 +48,7 @@ module.exports = function (conf) {
     }
   }
 
-  conf.src.addEventListener('load', function () {
+  options.src.addEventListener('load', function () {
     _self.init()
   })
 
