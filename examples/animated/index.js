@@ -2,22 +2,18 @@
 const Kaleidos = require('../../')
 const image = new Image()
 image.src = 'http://i.imgur.com/YaZJZac.jpg'
-const conf = {
-  className: 'kaleidos',
+const options = {
   src: image,
-  offsetRotation: 0,
-  offsetScale: 1,
   offsetX: 0,
   offsetY: 0,
-  radius: 800,
+  offsetRotation: 0,
   slices: Math.round(Math.random() * 20) + 4,
-  zoom: 0.4,
   ease: 0.1
 }
-const kaleidos = new Kaleidos(conf)
-var tx = conf.offsetX
-var ty = conf.offsetY
-var tr = conf.offsetRotation
+const kaleidos = new Kaleidos(options)
+var tx = options.offsetX
+var ty = options.offsetY
+var tr = options.offsetRotation
 
 const render = function () {
   var time = new Date().getTime() * 0.0002
@@ -25,9 +21,9 @@ const render = function () {
   var theta = Math.atan2(Math.sin(delta), Math.cos(delta))
   tx = Math.sin(time) * 2000 + 3000
   ty = Math.cos(time * 0.9) * 2000 + 3000
-  kaleidos.offsetX += (tx - kaleidos.offsetX) * conf.ease
-  kaleidos.offsetY += (ty - kaleidos.offsetY) * conf.ease
-  kaleidos.offsetRotation += (theta - kaleidos.offsetRotation) * conf.ease
+  kaleidos.offsetX += (tx - kaleidos.offsetX) * options.ease
+  kaleidos.offsetY += (ty - kaleidos.offsetY) * options.ease
+  kaleidos.offsetRotation += (theta - kaleidos.offsetRotation) * options.ease
   kaleidos.draw()
   requestAnimationFrame(render)
 }

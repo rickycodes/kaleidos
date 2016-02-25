@@ -19,16 +19,7 @@ image.src = 'http://i.imgur.com/YaZJZac.jpg'
 
 // instantiate
 const kaleidos = new Kaleidos({
-  className: 'kaleidos',
-  src: image, // pass above image as source
-  offsetRotation: 0,
-  offsetScale: 1,
-  offsetX: 0,
-  offsetY: 0,
-  radius: 800,
-  slices: Math.round(Math.random() * 20) + 4,
-  zoom: 0.4,
-  ease: 0.1
+  src: image // pass above image as source
 })
 ```
 
@@ -40,7 +31,8 @@ document.body.appendChild(kaleidos.domElement)
 ##### Result:
 ![kaleidos](http://i.imgur.com/n4O7JXn.jpg)
 
-*Check the <a target='_blank' href='https://rickycodes.github.io/kaleidos/'>`/examples`</a> for more information*
+*Check the <a href='https://github.com/rickycodes/kaleidos/tree/master/examples'>`/examples`</a>  
+<a target='_blank' href='https://rickycodes.github.io/kaleidos/'>Try them out</a>*
 
 #### TODO:
 ~~Add tests~~  

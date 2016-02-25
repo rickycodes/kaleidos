@@ -2,22 +2,18 @@
 const Kaleidos = require('../../')
 const image = new Image()
 image.src = 'http://i.imgur.com/YaZJZac.jpg'
-const conf = {
-  className: 'kaleidos',
+const options = {
   src: image,
-  offsetRotation: 0,
-  offsetScale: 1,
   offsetX: 0,
   offsetY: 0,
-  radius: 800,
+  offsetRotation: 0,
   slices: Math.round(Math.random() * 20) + 4,
-  zoom: 0.4,
   ease: 0.1
 }
-const kaleidos = new Kaleidos(conf)
-var tx = conf.offsetX
-var ty = conf.offsetY
-var tr = conf.offsetRotation
+const kaleidos = new Kaleidos(options)
+var tx = options.offsetX
+var ty = options.offsetY
+var tr = options.offsetRotation
 
 function onmousemoved (event) {
   var dx = event.pageX / window.innerWidth
@@ -32,9 +28,9 @@ function onmousemoved (event) {
 const render = function () {
   var delta = tr - kaleidos.offsetRotation
   var theta = Math.atan2(Math.sin(delta), Math.cos(delta))
-  kaleidos.offsetX += (tx - kaleidos.offsetX) * conf.ease
-  kaleidos.offsetY += (ty - kaleidos.offsetY) * conf.ease
-  kaleidos.offsetRotation += (theta - kaleidos.offsetRotation) * conf.ease
+  kaleidos.offsetX += (tx - kaleidos.offsetX) * options.ease
+  kaleidos.offsetY += (ty - kaleidos.offsetY) * options.ease
+  kaleidos.offsetRotation += (theta - kaleidos.offsetRotation) * options.ease
   kaleidos.draw()
   requestAnimationFrame(render)
 }

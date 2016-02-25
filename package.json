@@ -1,6 +1,6 @@
 {
   "name": "kaleidos",
-  "version": "0.5.2",
+  "version": "0.5.6",
   "description": "canvas kaleidoscope",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "homepage": "https://github.com/rickycodes/kaleidos",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test:standard & npm run test:module",
+    "test": "npm run build & npm run test:standard & npm run test:module",
     "test:standard": "standard -v",
     "test:module": "browserify test/test.js | ./node_modules/.bin/tape-run --render='tap-spec'",
     "build": "webpack",

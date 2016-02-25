@@ -1,21 +1,17 @@
 /*global requestAnimationFrame*/
 const Kaleidos = require('../../')
-const conf = {
-  className: 'kaleidos',
-  offsetRotation: 0,
-  offsetScale: 1,
+const options = {
   offsetX: 0,
   offsetY: 0,
-  radius: 800,
+  offsetRotation: 0,
   slices: Math.round(Math.random() * 20) + 4,
-  zoom: 0.4,
   ease: 0.1
 }
 var kaleidos
 var video
-var tx = conf.offsetX
-var ty = conf.offsetY
-var tr = conf.offsetRotation
+var tx = options.offsetX
+var ty = options.offsetY
+var tr = options.offsetRotation
 
 function onmousemoved (event) {
   var dx = event.pageX / window.innerWidth
@@ -30,9 +26,9 @@ function onmousemoved (event) {
 const render = function () {
   var delta = tr - kaleidos.offsetRotation
   var theta = Math.atan2(Math.sin(delta), Math.cos(delta))
-  kaleidos.offsetX += (tx - kaleidos.offsetX) * conf.ease
-  kaleidos.offsetY += (ty - kaleidos.offsetY) * conf.ease
-  kaleidos.offsetRotation += (theta - kaleidos.offsetRotation) * conf.ease
+  kaleidos.offsetX += (tx - kaleidos.offsetX) * options.ease
+  kaleidos.offsetY += (ty - kaleidos.offsetY) * options.ease
+  kaleidos.offsetRotation += (theta - kaleidos.offsetRotation) * options.ease
   requestAnimationFrame(render)
   kaleidos.context.fillStyle = kaleidos.context.createPattern(video, 'repeat')
   kaleidos.draw()
@@ -52,8 +48,8 @@ function init () {
       video.autoplay = true
       video.src = (window.URL) ? window.URL.createObjectURL(stream) : stream
 
-      conf.src = video
-      kaleidos = new Kaleidos(conf)
+      options.src = video
+      kaleidos = new Kaleidos(options)
       try {
         kaleidos.init()
       } catch (error) {
