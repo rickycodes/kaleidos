@@ -10,7 +10,8 @@ module.exports = function (options) {
     radius: 800,
     slices: 20,
     zoom: 0.4,
-    ease: 0.1
+    ease: 0.1,
+    style: true
   }
 
   Object.keys(defaults).forEach(function (k) {
@@ -26,8 +27,10 @@ module.exports = function (options) {
   this.context = this.domElement.getContext('2d')
 
   this.init = function () {
-    this.domElement.style.marginLeft = -options.radius + 'px'
-    this.domElement.style.marginTop = -options.radius + 'px'
+    if (options.style) {
+      this.domElement.style.marginLeft = -options.radius + 'px'
+      this.domElement.style.marginTop = -options.radius + 'px'
+    }
     this.domElement.setAttribute('class', this.className)
     this.domElement.width = this.domElement.height = options.radius * 2
     this.context.fillStyle = this.context.createPattern(options.src, 'repeat')

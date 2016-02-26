@@ -16,6 +16,13 @@ var tr = options.offsetRotation
 function onmousemoved (event) {
   var dx = event.pageX / window.innerWidth
   var dy = event.pageY / window.innerHeight
+  if (event.type === 'touchmove') {
+    if (event.touches.length === 1) {
+      var touch = event.touches[0]
+      dx = touch.clientX / window.innerWidth
+      dy = touch.clientY / window.innerHeight
+    }
+  }
   var hx = dx - 0.5
   var hy = dy - 0.5
   tx = hx * kaleidos.radius * -2
@@ -57,6 +64,7 @@ function init () {
       }
 
       window.addEventListener('mousemove', onmousemoved)
+      window.addEventListener('touchmove', onmousemoved)
       document.body.appendChild(kaleidos.domElement)
       render()
     }, function (error) {

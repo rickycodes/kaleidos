@@ -38,7 +38,7 @@ document.body.appendChild(kaleidos.domElement)
 ~~Add tests~~  
 Add _more_ tests  
 Add more examples  
-Make examples better on mobile  
+~~Make examples better on mobile~~  
 ~~Fix webcam example in Firefox~~  
 ~~Update src to be image _or_ video~~  
 ~~Cleanup~~
