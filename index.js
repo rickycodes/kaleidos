@@ -1,7 +1,9 @@
+const defaults = require('lodash.defaults')
+
 module.exports = function (options) {
   const _self = this
 
-  const defaults = {
+  options = defaults(options, {
     className: 'kaleidos',
     offsetRotation: 0,
     offsetScale: 1,
@@ -12,17 +14,18 @@ module.exports = function (options) {
     zoom: 0.4,
     ease: 0.1,
     style: true
-  }
-
-  Object.keys(defaults).forEach(function (k) {
-    options[k] = options[k] || defaults[k]
-    _self[k] = options[k]
   })
 
-  if (_self.slices % 2) { // force slices to be even
-    _self.slices += 1
+  if (options.slices % 2) { // force slices to be even
+    options.slices += 1
   }
 
+  this.className = options.className
+  this.offsetX = options.offsetX
+  this.offsetY = options.offsetY
+  this.offsetRotation = options.offsetRotation
+  this.radius = options.radius
+  this.slices = options.slices
   this.domElement = document.createElement('canvas')
   this.context = this.domElement.getContext('2d')
 
