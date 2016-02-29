@@ -12,7 +12,7 @@ function randomDate () {
 
 function getPhoto (url) {
   var request = new XMLHttpRequest()
-  request.open('GET', url + randomDate(), true)
+  request.open('GET', url, true)
 
   request.onload = function () {
     if (request.status >= 200 && request.status < 400) {
@@ -43,7 +43,7 @@ function getPhoto (url) {
 function init () {
   document.body.style.overflow = 'visible'
   for (var i = 0; i < amount; i++) {
-    getPhoto(apodUrl)
+    getPhoto(apodUrl + randomDate())
   }
 }
 
