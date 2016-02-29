@@ -55,3 +55,18 @@ test('className should be customizable', function (t) {
   })
   t.strictEqual(k.className, 'custom')
 })
+
+test('style should be truthy', function (t) {
+  t.plan(1)
+  t.strictEqual(kaleidos.style, true)
+})
+
+test('style should update', function (t) {
+  t.plan(1)
+  var k = new Kaleidos({
+    src: image,
+    className: 'custom',
+    style: false
+  })
+  t.strictEqual(k.style, false)
+})

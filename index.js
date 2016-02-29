@@ -28,6 +28,7 @@ module.exports = function (options) {
   this.slices = options.slices
   this.domElement = document.createElement('canvas')
   this.context = this.domElement.getContext('2d')
+  this.style = options.style
 
   this.init = function () {
     if (options.style) {
