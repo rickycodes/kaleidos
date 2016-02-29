@@ -28,6 +28,9 @@ const render = function () {
   requestAnimationFrame(render)
 }
 
-document.body.appendChild(kaleidos.domElement)
+image.addEventListener('load', function () {
+  kaleidos.init()
+  document.body.appendChild(kaleidos.domElement)
+})
 render()
 console.log(kaleidos)

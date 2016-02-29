@@ -23,9 +23,12 @@ const kaleidos = new Kaleidos({
 })
 ```
 
-##### Append to DOM:
+##### Append to DOM and initialize on image load:
 ```js
-document.body.appendChild(kaleidos.domElement)
+image.addEventListener('load', function () {
+  kaleidos.init()
+  document.body.appendChild(kaleidos.domElement)
+})
 ```
 
 ##### Result:

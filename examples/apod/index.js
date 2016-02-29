@@ -1,6 +1,6 @@
 /*global Image XMLHttpRequest*/
 const Kaleidos = require('../../')
-const amount = 16
+const amount = 40
 const apodUrl = 'https://api.nasa.gov/planetary/apod?api_key=ZeHs1xlBAtEBIAhcvT2aN6puHvknYEh9rcquGhLE&date='
 
 function randomDate () {
@@ -21,12 +21,16 @@ function getPhoto (url) {
       image.src = data.url
       var kaleidos = new Kaleidos({
         className: 'mandala',
-        radius: 160,
+        radius: 400,
         src: image,
         slices: Math.round(Math.random() * 20) + 4,
         style: false
       })
-      document.body.appendChild(kaleidos.domElement)
+
+      image.addEventListener('load', function () {
+        kaleidos.init()
+        document.body.appendChild(kaleidos.domElement)
+      })
     }
   }
 

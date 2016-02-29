@@ -1,8 +1,6 @@
 const defaults = require('lodash.defaults')
 
 module.exports = function (options) {
-  const _self = this
-
   options = defaults(options, {
     className: 'kaleidos',
     offsetRotation: 0,
@@ -66,10 +64,6 @@ module.exports = function (options) {
       this.context.restore()
     }
   }
-
-  options.src.addEventListener('load', function () {
-    _self.init()
-  })
 
   return this
 }
