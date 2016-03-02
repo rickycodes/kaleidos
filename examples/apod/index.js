@@ -28,8 +28,8 @@ function getPhoto (url) {
       })
 
       image.addEventListener('load', function () {
-        kaleidos.init()
         document.body.appendChild(kaleidos.domElement)
+        kaleidos.init()
       })
     }
   }

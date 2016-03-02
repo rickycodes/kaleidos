@@ -6,7 +6,7 @@ const kaleidos = new Kaleidos({
   src: image
 })
 image.addEventListener('load', function () {
-  kaleidos.init()
   document.body.appendChild(kaleidos.domElement)
+  kaleidos.init()
 })
 console.log(kaleidos)

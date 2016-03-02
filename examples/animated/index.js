@@ -29,8 +29,8 @@ const render = function () {
 }
 
 image.addEventListener('load', function () {
-  kaleidos.init()
   document.body.appendChild(kaleidos.domElement)
+  kaleidos.init()
 })
 render()
 console.log(kaleidos)

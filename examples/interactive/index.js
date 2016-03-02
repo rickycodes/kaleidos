@@ -45,8 +45,8 @@ const render = function () {
 window.addEventListener('mousemove', onmousemoved)
 window.addEventListener('touchmove', onmousemoved)
 image.addEventListener('load', function () {
-  kaleidos.init()
   document.body.appendChild(kaleidos.domElement)
+  kaleidos.init()
 })
 render()
 console.log(kaleidos)
