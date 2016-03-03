@@ -6,7 +6,8 @@ module.exports = {
     animated: './examples/animated/index.js',
     interactive: './examples/interactive/index.js',
     webcam: './examples/webcam/index.js',
-    apod: './examples/apod/index.js'
+    apod: './examples/apod/index.js',
+    dragndrop: './examples/dragndrop/index.js'
   },
   output: {
     path: 'dist/js/',
