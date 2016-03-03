@@ -12,6 +12,7 @@ const options = {
 }
 const kaleidos = new Kaleidos(options)
 var dropTarget
+var instructions
 var tx = options.offsetX
 var ty = options.offsetY
 var tr = options.offsetRotation
@@ -58,6 +59,7 @@ function updateSrc (img, src) {
 function drop (e) {
   e.preventDefault()
   dropTarget.style.opacity = 0
+  instructions.style.display = 'none'
   var img = new Image()
   var reader = new FileReader()
   var dt = e.dataTransfer
@@ -76,9 +78,14 @@ function init () {
   dropTarget = document.createElement('div')
   dropTarget.setAttribute('class', 'drop')
 
+  instructions = document.createElement('div')
+  instructions.setAttribute('class', 'instructions')
+  instructions.textContent = 'Drag an image from your desktop or browser context'
+
   window.addEventListener('mousemove', onmousemoved)
   window.addEventListener('touchmove', onmousemoved)
   image.addEventListener('load', function () {
+    document.body.appendChild(instructions)
     document.body.appendChild(dropTarget)
     document.body.appendChild(kaleidos.domElement)
     dropTarget.addEventListener('dragover', dragover, false)
