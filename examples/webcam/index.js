@@ -1,13 +1,14 @@
-/*global requestAnimationFrame*/
+/*global location requestAnimationFrame*/
+const qs = require('query-string')
+const parsed = qs.parse(location.search)
 const Kaleidos = require('../../')
 const options = {
   offsetX: 0,
   offsetY: 0,
   offsetRotation: 0,
-  slices: Math.round(Math.random() * 20) + 4,
+  slices: parseInt(parsed.slices, 10) || Math.round(Math.random() * 20) + 4,
   ease: 0.1
 }
-var hash
 var kaleidos
 var video
 var tx = options.offsetX
@@ -33,7 +34,7 @@ function onmousemoved (event) {
 
 const render = function () {
   var delta, theta
-  if (hash[1] === 'auto') {
+  if (parsed.animate === 'true') {
     var time = new Date().getTime() * 0.0002
     delta = tr - kaleidos.offsetRotation
     theta = Math.atan2(Math.sin(delta), Math.cos(delta))
@@ -55,7 +56,6 @@ function init () {
   if (kaleidos && kaleidos.domElement !== undefined) {
     document.body.removeChild(kaleidos.domElement)
   }
-  hash = window.location.hash.replace('#', '').split(';')
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia
   window.URL = window.URL || window.webkitURL
 
@@ -77,7 +77,7 @@ function init () {
         console.log(error)
       }
 
-      if (hash[1] !== 'auto') {
+      if (parsed.animate !== 'true') {
         window.addEventListener('mousemove', onmousemoved)
         window.addEventListener('touchmove', onmousemoved)
       }
@@ -90,4 +90,3 @@ function init () {
 }
 
 window.addEventListener('load', init)
-window.addEventListener('hashchange', init)
