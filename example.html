@@ -48,9 +48,9 @@ body {
 <body></body>
 <script>
 (function(){
-  var hash = window.location.hash.replace('#','')
+  var hash = window.location.hash.replace('#', '').split(';')
   var script = document.createElement('script')
-  script.setAttribute('src', 'js/' + hash + '.min.js')
+  script.setAttribute('src', 'js/' + hash[0] + '.min.js')
   document.body.appendChild(script)
 })()
 </script>
