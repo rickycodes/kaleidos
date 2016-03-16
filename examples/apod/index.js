@@ -20,15 +20,47 @@ function getPhoto (url) {
       var image = new Image()
       image.src = data.url
       var kaleidos = new Kaleidos({
-        className: 'mandala',
+        className: data.url,
         radius: 400,
         src: image,
-        slices: Math.round(Math.random() * 20) + 4,
+        slices: Math.round(Math.random() * 80) + 4,
         style: false
       })
 
+      var a = document.createElement('a')
+      a.setAttribute('title', data.title)
+      a.setAttribute('target', '_blank')
+      a.setAttribute('class', 'mandala')
+
+      a.addEventListener('click', function (event) {
+        event.preventDefault()
+        var w = window.open('about:blank', data.url)
+        var t = [
+          '<body style="background:#2B2B2B;">',
+          '<div style="padding:20;font-family:sans-serif;color:#F7F7F7;">',
+          '<h2>',
+          data.title,
+          '</h2>',
+          '<h3>',
+          'Date: ',
+          data.date,
+          '</h3>',
+          '<img style="max-width: 100%;" src="',
+          data.hdurl || data.url,
+          '?api_key=ZeHs1xlBAtEBIAhcvT2aN6puHvknYEh9rcquGhLE" />',
+          '<p>',
+          data.explanation,
+          '</p>',
+          '</div>',
+          '</body>'
+        ]
+        w.document.write(t.join(''))
+      })
+
+      a.appendChild(kaleidos.domElement)
+
       image.addEventListener('load', function () {
-        document.body.appendChild(kaleidos.domElement)
+        document.body.appendChild(a)
         kaleidos.init()
       })
     }

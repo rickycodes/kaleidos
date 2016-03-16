@@ -9,7 +9,7 @@
   "homepage": "https://github.com/rickycodes/kaleidos",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build & npm run test:standard & npm run test:module",
+    "test": "npm run build && npm run test:module && npm run test:standard",
     "test:standard": "standard -v",
     "test:module": "browserify test/test.js | ./node_modules/.bin/tape-run --render='tap-spec'",
     "build": "webpack",
