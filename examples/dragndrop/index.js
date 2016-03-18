@@ -48,7 +48,16 @@ function dragover (event) {
   dropTarget.style.opacity = 0.4
 }
 
-function updateSrc (img, src) {
+function readFile (file) {
+  var reader = new FileReader()
+  reader.addEventListener('load', function (event) {
+    updateSrc(event.target.result)
+  })
+  reader.readAsDataURL(file)
+}
+
+function updateSrc (src) {
+  var img = new Image()
   img.src = src
   img.addEventListener('load', function () {
     kaleidos.context.fillStyle = kaleidos.context.createPattern(img, 'repeat')
@@ -58,17 +67,13 @@ function updateSrc (img, src) {
 function drop (e) {
   e.preventDefault()
   dropTarget.style.opacity = 0
-  var reader = new FileReader()
   var dt = e.dataTransfer
   var file = dt.files[0]
   if (dt.getData('URL')) {
-    updateSrc(new Image(), dt.getData('URL'))
+    updateSrc(dt.getData('URL'))
     return
   }
-  reader.addEventListener('load', function (event) {
-    updateSrc(new Image(), event.target.result)
-  })
-  reader.readAsDataURL(file)
+  readFile(file)
 }
 
 function init () {
@@ -84,11 +89,7 @@ function init () {
   input.setAttribute('accept', '.jpg,.jpeg,.gif,.png')
 
   input.addEventListener('change', function (event) {
-    var reader = new FileReader()
-    reader.addEventListener('load', function (event) {
-      updateSrc(new Image(), event.target.result)
-    })
-    reader.readAsDataURL(this.files[0])
+    readFile(this.files[0])
   })
 
   instructions.appendChild(input)
