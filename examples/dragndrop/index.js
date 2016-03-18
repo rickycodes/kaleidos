@@ -12,7 +12,6 @@ const options = {
 }
 const kaleidos = new Kaleidos(options)
 var dropTarget
-var instructions
 var tx = options.offsetX
 var ty = options.offsetY
 var tr = options.offsetRotation
@@ -44,8 +43,8 @@ const render = function () {
   requestAnimationFrame(render)
 }
 
-function dragover (e) {
-  e.preventDefault()
+function dragover (event) {
+  event.preventDefault()
   dropTarget.style.opacity = 0.4
 }
 
@@ -59,17 +58,15 @@ function updateSrc (img, src) {
 function drop (e) {
   e.preventDefault()
   dropTarget.style.opacity = 0
-  instructions.style.display = 'none'
-  var img = new Image()
   var reader = new FileReader()
   var dt = e.dataTransfer
   var file = dt.files[0]
   if (dt.getData('URL')) {
-    updateSrc(img, dt.getData('URL'))
+    updateSrc(new Image(), dt.getData('URL'))
     return
   }
-  reader.addEventListener('load', function (e) {
-    updateSrc(img, e.target.result)
+  reader.addEventListener('load', function (event) {
+    updateSrc(new Image(), event.target.result)
   })
   reader.readAsDataURL(file)
 }
@@ -78,9 +75,23 @@ function init () {
   dropTarget = document.createElement('div')
   dropTarget.setAttribute('class', 'drop')
 
-  instructions = document.createElement('div')
+  var instructions = document.createElement('div')
   instructions.setAttribute('class', 'instructions')
-  instructions.textContent = 'Drag an image from your desktop or browser context'
+  instructions.textContent = 'Drag an image from your desktop or browser context (or click here)'
+
+  var input = document.createElement('input')
+  input.setAttribute('type', 'file')
+  input.setAttribute('accept', '.jpg,.jpeg,.gif,.png')
+
+  input.addEventListener('change', function (event) {
+    var reader = new FileReader()
+    reader.addEventListener('load', function (event) {
+      updateSrc(new Image(), event.target.result)
+    })
+    reader.readAsDataURL(this.files[0])
+  })
+
+  instructions.appendChild(input)
 
   window.addEventListener('mousemove', onmousemoved)
   window.addEventListener('touchmove', onmousemoved)
