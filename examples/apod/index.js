@@ -5,12 +5,8 @@ var api_key = 'ZeHs1xlBAtEBIAhcvT2aN6puHvknYEh9rcquGhLE'
 var apod_url = 'https://api.nasa.gov/planetary/apod?api_key=' + api_key + '&date='
 var html
 var body
-var overlay
-var overlay_content
-var overlay_bg
-var content
 
-function qs (selector) {
+function $ (selector) {
   return document.querySelector(selector)
 }
 
@@ -22,7 +18,9 @@ function overlayTemplate (data) {
     data.date,
     '</h3><img style="max-width: 100%;" src="',
     data.hdurl || data.url,
-    '?api_key="' + api_key + '" /><p>',
+    '?api_key="',
+    api_key,
+    '" /><p>',
     data.explanation,
     '</div>'
   ].join('')
@@ -42,8 +40,8 @@ function toggleOverlay (event) {
   var toggleClass = 'overlay-enabled'
   body.classList.toggle(toggleClass)
   if (body.classList.contains(toggleClass)) {
-    overlay_content.innerHTML = this.dataset.overlay
-    overlay.style.height = getPageHeight()
+    $('.overlay .wrap div').innerHTML = this.dataset.overlay
+    $('.overlay').style.height = getPageHeight()
     body.scrollTop = 0
   }
 }
@@ -83,7 +81,7 @@ function getPhoto (url) {
       a.appendChild(kaleidos.domElement)
 
       image.addEventListener('load', function () {
-        content.appendChild(a)
+        $('.content').appendChild(a)
         kaleidos.init()
       })
     }
@@ -98,13 +96,8 @@ function getPhoto (url) {
 function init () {
   body = document.body
   html = document.documentElement
-  var close = qs('.close')
-  overlay = qs('.overlay')
-  overlay_content = qs('.overlay .wrap div')
-  content = qs('.content')
-  overlay_bg = qs('.bg')
-  close.addEventListener('click', toggleOverlay)
-  overlay_bg.addEventListener('click', toggleOverlay)
+  $('.close').addEventListener('click', toggleOverlay)
+  $('.bg').addEventListener('click', toggleOverlay)
   body.style.overflow = 'visible'
   for (var i = 0; i < amount; i++) {
     getPhoto(apod_url + randomDate())
