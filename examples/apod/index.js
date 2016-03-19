@@ -35,18 +35,7 @@ function getPageHeight () {
   ) + 'px'
 }
 
-function toggleOverlay (event) {
-  event.preventDefault()
-  var toggleClass = 'overlay-enabled'
-  body.classList.toggle(toggleClass)
-  if (body.classList.contains(toggleClass)) {
-    $('.overlay .wrap div').innerHTML = this.dataset.overlay
-    $('.overlay').style.height = getPageHeight()
-    body.scrollTop = 0
-  }
-}
-
-function randomDate () {
+function getRandomDate () {
   var start = new Date(1996, 6, 16)
   var end = new Date()
   var date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
@@ -93,6 +82,17 @@ function getPhoto (url) {
   request.send()
 }
 
+function toggleOverlay (event) {
+  event.preventDefault()
+  var toggleClass = 'overlay-enabled'
+  body.classList.toggle(toggleClass)
+  if (body.classList.contains(toggleClass)) {
+    $('.overlay .wrap div').innerHTML = this.dataset.overlay
+    $('.overlay').style.height = getPageHeight()
+    body.scrollTop = 0
+  }
+}
+
 function init () {
   body = document.body
   html = document.documentElement
@@ -100,7 +100,7 @@ function init () {
   $('.bg').addEventListener('click', toggleOverlay)
   body.style.overflow = 'visible'
   for (var i = 0; i < amount; i++) {
-    getPhoto(apod_url + randomDate())
+    getPhoto(apod_url + getRandomDate())
   }
 }
 
