@@ -82,7 +82,7 @@ function init () {
 
   var instructions = document.createElement('div')
   instructions.setAttribute('class', 'instructions')
-  instructions.textContent = 'Drag an image from your desktop or browser context (or click here)'
+  instructions.textContent = 'Drag an image from your desktop, browser context or click here'
 
   var input = document.createElement('input')
   input.setAttribute('type', 'file')
