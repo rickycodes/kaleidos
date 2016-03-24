@@ -14,6 +14,10 @@ body {
   overflow: hidden;
 }
 
+body.overlay-enabled {
+  overflow: hidden !important;
+}
+
 .social {
   position: absolute;
   z-index: 3;
@@ -67,6 +71,7 @@ a.close svg {
   fill: #FFF;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 
 .drop {
@@ -103,23 +108,19 @@ a.close svg {
   cursor: pointer;
 }
 
-.overlay, .overlay .bg {
-  position: absolute;
+.overlay {
+  position: fixed;
+  overflow: auto;
   top: 0;
   right: 0;
   width: 100%;
   height: 100%;
+  background: rgba(0,0,0,0.5);
 }
 
 .overlay {
   z-index: 1;
   display: none;
-}
-
-.overlay .bg {
-  display: block;
-  background: black;
-  opacity: 0.4;
 }
 
 .overlay-enabled .overlay {
@@ -152,7 +153,6 @@ a.close svg {
     </iframe>
   </div>
   <div class='overlay'>
-    <a href='#' class='bg'></a>
     <div class='wrap'>
       <div></div>
       <a href='#' class='close'>
