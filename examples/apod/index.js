@@ -17,11 +17,11 @@ function overlayTemplate (data) {
     data.date,
     '</h3><img style="max-width: 100%;" src="',
     data.hdurl || data.url,
-    '?api_key="',
+    '?api_key=',
     api_key,
     '" /><p>',
     data.explanation,
-    '</div>'
+    '</p>'
   ].join('')
 }
 
