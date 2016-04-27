@@ -23,3 +23,11 @@ small { font-size: 60%; }
   <iframe src='https://ghbtns.com/github-btn.html?user=rickycodes&repo=kaleidos&type=star&count=true' frameborder='0' scrolling='0' width='170px' height='20px'>
   </iframe>
 </div>
+<script>
+(function () {
+  var pref = 'https:'
+  var location = window.location
+  var prevent = location.hostname.match(/(localhost|127.0.0.1)/)
+  location.protocol = (!prevent && location.protocol !== pref) && pref
+})()
+</script>
