@@ -3,6 +3,7 @@ const qs = require('query-string')
 const parsed = qs.parse(location.search)
 const Kaleidos = require('../../')
 const options = {
+  radius: document.body.clientWidth / 1.6,
   offsetX: 0,
   offsetY: 0,
   offsetRotation: 0,

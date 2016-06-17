@@ -4,6 +4,7 @@ const image = new Image()
 image.src = 'http://i.imgur.com/YaZJZac.jpg'
 const options = {
   src: image,
+  radius: document.body.clientWidth / 1.6,
   offsetX: 0,
   offsetY: 0,
   offsetRotation: 0,
