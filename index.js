@@ -1,22 +1,9 @@
 const defaults = require('lodash.defaults')
 
 module.exports = function (options) {
-  options = defaults(options, {
-    className: 'kaleidos',
-    offsetRotation: 0,
-    offsetScale: 1,
-    offsetX: 0,
-    offsetY: 0,
-    radius: 800,
-    slices: 20,
-    zoom: 0.4,
-    ease: 0.1,
-    style: true
-  })
+  options = defaults(options, require('./defaults'))
 
-  if (options.slices % 2) { // force slices to be even
-    options.slices += 1
-  }
+  options.slices = options.slices % 2 ? options.slices + 1 : options.slices
 
   this.className = options.className
   this.offsetX = options.offsetX
