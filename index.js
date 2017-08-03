@@ -5,53 +5,54 @@ module.exports = function (canvas, opts) {
 
   opts.slices = opts.slices % 2 ? opts.slices + 1 : opts.slices
 
-  this.className = opts.className
-  this.offsetX = opts.offsetX
-  this.offsetY = opts.offsetY
-  this.offsetRotation = opts.offsetRotation
-  this.radius = opts.radius
-  this.slices = opts.slices
-  // this needs to be a param
-  this.domElement = canvas
+  const className = opts.className
+  const offsetX = opts.offsetX
+  const offsetY = opts.offsetY
+  const offsetRotation = opts.offsetRotation
+  const radius = opts.radius
+  const slices = opts.slices
   const context = canvas.getContext('2d')
-  this.style = opts.style
+  const style = opts.style
 
-  this.init = function () {
+  const initialize = function () {
     if (opts.style) {
-      this.domElement.style.marginLeft = -opts.radius + 'px'
-      this.domElement.style.marginTop = -opts.radius + 'px'
+      canvas.style.marginLeft = -opts.radius + 'px'
+      canvas.style.marginTop = -opts.radius + 'px'
     }
-    this.domElement.setAttribute('class', this.className)
-    this.domElement.width = this.domElement.height = opts.radius * 2
+    canvas.setAttribute('class', className)
+    canvas.width = canvas.height = opts.radius * 2
     context.fillStyle = context.createPattern(opts.src, 'repeat')
-    this.draw()
+    draw()
   }
 
-  this.draw = function () {
-    var step = (Math.PI * 2) / this.slices
+  const draw = function () {
+    var step = (Math.PI * 2) / slices
     var cx = opts.src.width / 2
     var width = opts.src.width || opts.src.videoWidth
     var height = opts.src.height || opts.src.videoHeight
     var scale = opts.zoom * (opts.radius / Math.min(width, height))
-    for (var i = 0; i < this.slices; i++) {
+    for (var i = 0; i < slices; i++) {
       context.save()
-      context.translate(this.radius, this.radius)
+      context.translate(radius, radius)
       context.rotate(i * step)
       context.beginPath()
       context.moveTo(-0.5, -0.5)
-      context.arc(0, 0, this.radius, step * -0.51, step * 0.51)
+      context.arc(0, 0, radius, step * -0.51, step * 0.51)
       context.lineTo(0.5, 0.5)
       context.closePath()
       context.rotate(Math.PI / 2)
       context.scale(scale, scale)
       context.scale([-1, 1][i % 2], 1)
-      context.translate(this.offsetX - cx, this.offsetY)
-      context.rotate(this.offsetRotation)
-      context.scale(this.offsetScale, this.offsetScale)
+      context.translate(offsetX - cx, offsetY)
+      context.rotate(offsetRotation)
+      context.scale(opts.offsetScale, opts.offsetScale)
       context.fill()
       context.restore()
     }
   }
 
-  return this
+  return {
+    canvas,
+    initialize
+  }
 }

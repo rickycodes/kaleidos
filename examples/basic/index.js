@@ -9,9 +9,10 @@ const kaleidos = new Kaleidos(canvas, {
   src: image,
   radius: document.body.clientWidth / 1.6
 })
+
 image.addEventListener('load', function () {
-  document.body.appendChild(kaleidos.domElement)
-  kaleidos.init()
+  document.body.appendChild(kaleidos.canvas)
+  kaleidos.initialize()
 })
 
 console.log(kaleidos)
