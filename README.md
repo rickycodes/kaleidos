@@ -17,8 +17,11 @@ const Kaleidos = require('kaleidos')
 const image = new Image()
 image.src = 'http://i.imgur.com/YaZJZac.jpg'
 
+// create a canvas
+const canvas = document.createElement('canvas')
+
 // instantiate
-const kaleidos = new Kaleidos({
+const kaleidos = new Kaleidos(canvas, {
   src: image // pass above image as source
 })
 ```
@@ -26,8 +29,8 @@ const kaleidos = new Kaleidos({
 ##### Append to DOM and initialize on image load:
 ```js
 image.addEventListener('load', function () {
-  document.body.appendChild(kaleidos.domElement)
-  kaleidos.init()
+  document.body.appendChild(kaleidos.canvas)
+  kaleidos.initialize()
 })
 ```
 
