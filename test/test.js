@@ -71,3 +71,17 @@ test('style should update', function (t) {
   })
   t.strictEqual(k.style, false)
 })
+
+test('should throw if first param is not canvas', function (t) {
+  t.plan(1)
+  try {
+    var k = new Kaleidos({
+      src: image,
+      className: 'custom',
+      style: false
+    })
+    console.log(k)
+  } catch (e) {
+    t.strictEqual(e.message, 'first param is not canvas')
+  }
+})
