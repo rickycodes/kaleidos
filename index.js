@@ -4,7 +4,7 @@ module.exports = function (canvas, opts) {
   const isCanvas = /canvas/i.test(Object.prototype.toString.call(canvas))
   if (!isCanvas) throw new TypeError('first param is not canvas')
 
-  const context = this.context = canvas.getContext('2d')
+  const context = this.context = opts.context || canvas.getContext('2d')
 
   opts = defaults(opts, require('./defaults'))
 
@@ -25,7 +25,7 @@ module.exports = function (canvas, opts) {
       canvas.style.marginLeft = -opts.radius + 'px'
       canvas.style.marginTop = -opts.radius + 'px'
     }
-    if (this.className !== null) canvas.setAttribute('class', this.className)
+    if (this.className) canvas.setAttribute('class', this.className)
     canvas.width = canvas.height = opts.radius * 2
     context.fillStyle = context.createPattern(opts.src, 'repeat')
     this.draw()
