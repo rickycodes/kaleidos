@@ -43,7 +43,8 @@ function getPhoto (url) {
       var image = new Image()
       image.src = data.url
 
-      var kaleidos = new Kaleidos({
+      const canvas = document.createElement('canvas')
+      var kaleidos = new Kaleidos(canvas, {
         className: 'apod',
         radius: 400,
         src: image,
@@ -57,11 +58,11 @@ function getPhoto (url) {
       a.setAttribute('class', 'mandala')
       a.setAttribute('data-overlay', overlayTemplate(data))
       a.addEventListener('click', toggleOverlay)
-      a.appendChild(kaleidos.domElement)
+      a.appendChild(kaleidos.canvas)
 
       image.addEventListener('load', function () {
         $('.content').appendChild(a)
-        kaleidos.init()
+        kaleidos.initialize()
       })
     }
   }

@@ -54,8 +54,8 @@ const render = function () {
 }
 
 function init () {
-  if (kaleidos && kaleidos.domElement !== undefined) {
-    document.body.removeChild(kaleidos.domElement)
+  if (kaleidos && kaleidos.canvas !== undefined) {
+    document.body.removeChild(kaleidos.canvas)
   }
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia
   window.URL = window.URL || window.webkitURL
@@ -71,9 +71,10 @@ function init () {
       video.src = (window.URL) ? window.URL.createObjectURL(stream) : stream
 
       options.src = video
-      kaleidos = new Kaleidos(options)
+      const canvas = document.createElement('canvas')
+      kaleidos = new Kaleidos(canvas, options)
       try {
-        kaleidos.init()
+        kaleidos.initialize()
       } catch (error) {
         console.log(error)
       }
@@ -82,7 +83,7 @@ function init () {
         window.addEventListener('mousemove', onmousemoved)
         window.addEventListener('touchmove', onmousemoved)
       }
-      document.body.appendChild(kaleidos.domElement)
+      document.body.appendChild(kaleidos.canvas)
       render()
     }, function (error) {
       console.log(error)
