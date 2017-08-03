@@ -1,11 +1,12 @@
 /*global Image */
 const test = require('tape')
 const Kaleidos = require('../')
+const canvas = document.createElement('canvas')
 
 const image = new Image()
 image.src = 'http://i.imgur.com/YaZJZac.jpg'
 
-const kaleidos = new Kaleidos({
+const kaleidos = new Kaleidos(canvas, {
   src: image,
   slices: Math.round(Math.random() * 20) + 4
 })
@@ -35,7 +36,7 @@ test('offsetY should update', function (t) {
 
 test('slices should be even', function (t) {
   t.plan(1)
-  var k = new Kaleidos({
+  var k = new Kaleidos(canvas, {
     src: image,
     slices: 5
   })
@@ -49,7 +50,7 @@ test('default className should be set', function (t) {
 
 test('className should be customizable', function (t) {
   t.plan(1)
-  var k = new Kaleidos({
+  var k = new Kaleidos(canvas, {
     src: image,
     className: 'custom'
   })
@@ -63,10 +64,24 @@ test('style should be truthy', function (t) {
 
 test('style should update', function (t) {
   t.plan(1)
-  var k = new Kaleidos({
+  var k = new Kaleidos(canvas, {
     src: image,
     className: 'custom',
     style: false
   })
   t.strictEqual(k.style, false)
+})
+
+test('should throw if first param is not canvas', function (t) {
+  t.plan(1)
+  try {
+    var k = new Kaleidos({
+      src: image,
+      className: 'custom',
+      style: false
+    })
+    console.log(k)
+  } catch (e) {
+    t.strictEqual(e.message, 'first param is not canvas')
+  }
 })

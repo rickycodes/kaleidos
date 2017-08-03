@@ -2,6 +2,7 @@
 const Kaleidos = require('../../')
 const image = new Image()
 image.src = 'http://i.imgur.com/YaZJZac.jpg'
+const canvas = document.createElement('canvas')
 const options = {
   src: image,
   radius: document.body.clientWidth / 1.6,
@@ -11,7 +12,7 @@ const options = {
   slices: Math.round(Math.random() * 20) + 4,
   ease: 0.1
 }
-const kaleidos = new Kaleidos(options)
+const kaleidos = new Kaleidos(canvas, options)
 var dropTarget
 var tx = options.offsetX
 var ty = options.offsetY
@@ -100,10 +101,10 @@ function init () {
   image.addEventListener('load', function () {
     document.body.appendChild(instructions)
     document.body.appendChild(dropTarget)
-    document.body.appendChild(kaleidos.domElement)
+    document.body.appendChild(kaleidos.canvas)
     dropTarget.addEventListener('dragover', dragover, false)
     dropTarget.addEventListener('drop', drop, false)
-    kaleidos.init()
+    kaleidos.initialize()
   })
   render()
 }

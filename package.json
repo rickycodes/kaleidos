@@ -14,7 +14,7 @@
     "test:module": "browserify test/test.js | ./node_modules/.bin/tape-run --render='tap-spec'",
     "build": "webpack",
     "start": "npm run build && npm run server",
-    "watch": "webpack -w & npm run server",
+    "dev": "webpack -w & npm run server",
     "server": "http-server dist -a localhost -p 8000",
     "gh-pages": ""
   },

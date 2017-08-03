@@ -1,54 +1,59 @@
 const defaults = require('lodash.defaults')
 
-module.exports = function (options) {
-  options = defaults(options, require('./defaults'))
+module.exports = function (canvas, opts) {
+  const isCanvas = /canvas/i.test(Object.prototype.toString.call(canvas))
+  if (!isCanvas) throw new TypeError('first param is not canvas')
 
-  options.slices = options.slices % 2 ? options.slices + 1 : options.slices
+  const context = this.context = canvas.getContext('2d')
 
-  this.className = options.className
-  this.offsetX = options.offsetX
-  this.offsetY = options.offsetY
-  this.offsetRotation = options.offsetRotation
-  this.radius = options.radius
-  this.slices = options.slices
-  this.domElement = document.createElement('canvas')
-  this.context = this.domElement.getContext('2d')
-  this.style = options.style
+  opts = defaults(opts, require('./defaults'))
 
-  this.init = function () {
-    if (options.style) {
-      this.domElement.style.marginLeft = -options.radius + 'px'
-      this.domElement.style.marginTop = -options.radius + 'px'
+  opts.slices = opts.slices % 2 ? opts.slices + 1 : opts.slices
+
+  // these need to be exposed
+  this.offsetX = opts.offsetX
+  this.offsetY = opts.offsetY
+  this.offsetRotation = opts.offsetRotation
+  this.canvas = canvas
+  this.className = opts.className
+  this.radius = opts.radius
+  this.slices = opts.slices
+  this.style = opts.style
+
+  this.initialize = function () {
+    if (opts.style) {
+      canvas.style.marginLeft = -opts.radius + 'px'
+      canvas.style.marginTop = -opts.radius + 'px'
     }
-    this.domElement.setAttribute('class', this.className)
-    this.domElement.width = this.domElement.height = options.radius * 2
-    this.context.fillStyle = this.context.createPattern(options.src, 'repeat')
+    canvas.setAttribute('class', this.className)
+    canvas.width = canvas.height = opts.radius * 2
+    context.fillStyle = context.createPattern(opts.src, 'repeat')
     this.draw()
   }
 
   this.draw = function () {
-    var step = (Math.PI * 2) / this.slices
-    var cx = options.src.width / 2
-    var width = options.src.width || options.src.videoWidth
-    var height = options.src.height || options.src.videoHeight
-    var scale = options.zoom * (options.radius / Math.min(width, height))
-    for (var i = 0; i < this.slices; i++) {
-      this.context.save()
-      this.context.translate(this.radius, this.radius)
-      this.context.rotate(i * step)
-      this.context.beginPath()
-      this.context.moveTo(-0.5, -0.5)
-      this.context.arc(0, 0, this.radius, step * -0.51, step * 0.51)
-      this.context.lineTo(0.5, 0.5)
-      this.context.closePath()
-      this.context.rotate(Math.PI / 2)
-      this.context.scale(scale, scale)
-      this.context.scale([-1, 1][i % 2], 1)
-      this.context.translate(this.offsetX - cx, this.offsetY)
-      this.context.rotate(this.offsetRotation)
-      this.context.scale(this.offsetScale, this.offsetScale)
-      this.context.fill()
-      this.context.restore()
+    const step = (Math.PI * 2) / this.slices
+    const cx = opts.src.width / 2
+    const width = opts.src.width || opts.src.videoWidth
+    const height = opts.src.height || opts.src.videoHeight
+    const scale = opts.zoom * (opts.radius / Math.min(width, height))
+    for (let i = 0; i < this.slices; i++) {
+      context.save()
+      context.translate(this.radius, this.radius)
+      context.rotate(i * step)
+      context.beginPath()
+      context.moveTo(-0.5, -0.5)
+      context.arc(0, 0, this.radius, step * -0.51, step * 0.51)
+      context.lineTo(0.5, 0.5)
+      context.closePath()
+      context.rotate(Math.PI / 2)
+      context.scale(scale, scale)
+      context.scale([-1, 1][i % 2], 1)
+      context.translate(this.offsetX - cx, this.offsetY)
+      context.rotate(this.offsetRotation)
+      context.scale(opts.offsetScale, opts.offsetScale)
+      context.fill()
+      context.restore()
     }
   }
 
