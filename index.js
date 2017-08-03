@@ -25,7 +25,7 @@ module.exports = function (canvas, opts) {
       canvas.style.marginLeft = -opts.radius + 'px'
       canvas.style.marginTop = -opts.radius + 'px'
     }
-    canvas.setAttribute('class', this.className)
+    if (this.className !== null) canvas.setAttribute('class', this.className)
     canvas.width = canvas.height = opts.radius * 2
     context.fillStyle = context.createPattern(opts.src, 'repeat')
     this.draw()
