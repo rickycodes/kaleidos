@@ -4,7 +4,7 @@ module.exports = function (canvas, opts) {
   const isCanvas = /canvas/i.test(Object.prototype.toString.call(canvas))
   if (!isCanvas) throw new TypeError('first param is not canvas')
 
-  const context = this.context = opts.context || canvas.getContext('2d')
+  const context = this.context = canvas.getContext('2d')
 
   opts = defaults(opts, require('./defaults'))
 
