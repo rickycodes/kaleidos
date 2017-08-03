@@ -5,7 +5,7 @@ const canvas = document.createElement('canvas')
 
 image.src = 'http://i.imgur.com/YaZJZac.jpg'
 
-const kaleidos = Kaleidos(canvas, {
+const kaleidos = new Kaleidos(canvas, {
   src: image,
   radius: document.body.clientWidth / 1.6
 })
