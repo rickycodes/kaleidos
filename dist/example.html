@@ -171,11 +171,3 @@ a.close svg {
   </div>
   <div class='content'></div>
 </body>
-<script>
-(function(){
-  var hash = window.location.hash.replace('#', '').split(';')
-  var script = document.createElement('script')
-  script.setAttribute('src', 'js/' + hash[0] + '.min.js')
-  document.body.appendChild(script)
-})()
-</script>
