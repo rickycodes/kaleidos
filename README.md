@@ -1,4 +1,6 @@
 ### Kaleidos  
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/rickycodes/kaleidos.svg)](https://greenkeeper.io/)
 [![Build Status](https://api.travis-ci.org/rickycodes/kaleidos.svg?branch=master)](https://travis-ci.org/rickycodes/kaleidos/) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) [![npm-version](https://img.shields.io/npm/v/kaleidos.svg?style=flat)](https://www.npmjs.com/package/kaleidos)  
 `<canvas>` kaleidoscope node module for use with browserify, webpack, etc.
 
